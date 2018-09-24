@@ -58,3 +58,83 @@ Route::get('admin/Product/edit/{id}', 'ProductController@edit')->name('edit_prod
 Route::post('admin/Product/update', 'ProductController@update')->name('update_product');
 
 Route::get('admin/Product/destroy/{id}', 'ProductController@destroy')->name('destroy_product');
+
+/*~~~~~~~~~~~___________Customers Route__________~~~~~~~~~~~~*/
+
+Route::get('admin/Customer/index', 'CustomerController@index')->name('index_customer');
+
+Route::get('admin/Customer/create', 'CustomerController@create')->name('create_customer');
+
+Route::post('admin/Customer/store', 'CustomerController@store')->name('store_customer');
+
+Route::get('admin/Customer/show/{id}', 'CustomerController@show')->name('show_customer');
+
+Route::get('admin/Customer/edit/{id}', 'CustomerController@edit')->name('edit_customer');
+
+Route::post('admin/Customer/update', 'CustomerController@update')->name('update_customer');
+
+Route::get('admin/Customer/destroy/{id}', 'CustomerController@destroy')->name('destroy_customer');
+
+/*~~~~~~~~~~~___________Events Route__________~~~~~~~~~~~~*/
+
+Route::get('admin/Event/index', 'EventController@index')->name('index_event');
+
+Route::get('admin/Event/create', 'EventController@create')->name('create_event');
+
+Route::post('admin/Event/store', 'EventController@store')->name('store_event');
+
+Route::get('admin/Event/show/{id}', 'EventController@show')->name('show_event');
+
+Route::get('admin/Event/edit/{id}', 'EventController@edit')->name('edit_event');
+
+Route::post('admin/Event/update', 'EventController@update')->name('update_event');
+
+Route::get('admin/Event/destroy/{id}', 'EventController@destroy')->name('destroy_event');
+
+/*~~~~~~~~~~~___________Couleurs Route__________~~~~~~~~~~~~*/
+
+Route::get('admin/Couleur/index', 'CouleurController@index')->name('index_couleur');
+
+Route::get('admin/Couleur/create', 'CouleurController@create')->name('create_couleur');
+
+Route::post('admin/Couleur/store', 'CouleurController@store')->name('store_couleur');
+
+Route::get('admin/Couleur/show/{id}', 'CouleurController@show')->name('show_couleur');
+
+Route::get('admin/Couleur/edit/{id}', 'CouleurController@edit')->name('edit_couleur');
+
+Route::post('admin/Couleur/update', 'CouleurController@update')->name('update_couleur');
+
+Route::get('admin/Couleur/destroy/{id}', 'CouleurController@destroy')->name('destroy_couleur');
+
+/*~~~~~~~~~~~___________Tailles Route__________~~~~~~~~~~~~*/
+
+Route::get('admin/Taille/index', 'TailleController@index')->name('index_taille');
+
+Route::get('admin/Taille/create', 'TailleController@create')->name('create_taille');
+
+Route::post('admin/Taille/store', 'TailleController@store')->name('store_taille');
+
+Route::get('admin/Taille/show/{id}', 'TailleController@show')->name('show_taille');
+
+Route::get('admin/Taille/edit/{id}', 'TailleController@edit')->name('edit_taille');
+
+Route::post('admin/Taille/update', 'TailleController@update')->name('update_taille');
+
+Route::get('admin/Taille/destroy/{id}', 'TailleController@destroy')->name('destroy_taille');
+
+/*~~~~~~~~~~~___________Zones Route__________~~~~~~~~~~~~*/
+
+Route::get('admin/Zone/index', 'ZoneController@index')->name('index_zone');
+
+Route::get('admin/Zone/create', 'ZoneController@create')->name('create_zone');
+
+Route::post('admin/Zone/store', 'ZoneController@store')->name('store_zone');
+
+Route::get('admin/Zone/show/{id}', 'ZoneController@show')->name('show_zone');
+
+Route::get('admin/Zone/edit/{id}', 'ZoneController@edit')->name('edit_zone');
+
+Route::post('admin/Zone/update', 'ZoneController@update')->name('update_zone');
+
+Route::get('admin/Zone/destroy/{id}', 'ZoneController@destroy')->name('destroy_zone');

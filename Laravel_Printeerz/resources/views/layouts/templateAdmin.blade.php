@@ -16,7 +16,6 @@
     <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
     
 </head>
-
 <body>
     <link async="" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900" rel="stylesheet" />
     <div id="root">
@@ -56,11 +55,13 @@
                                 <span class="uik-nav-link-2__text">
                                 <span class="uik-nav-link-2__icon" ><i class="uikon">calendar</i></span>Utilisateurs</span>
                                 </a>
-                            <a class="uik-nav-link-2__wrapper uik-nav-link-2__highlighted">
+                            <a class="uik-nav-link-2__wrapper uik-nav-link-2__highlighted" href="{{route('index_event')}}">
                                 <span class="uik-nav-link-2__text"><span class="uik-nav-link-2__icon"><i class="uikon">inbox_paper_round</i>
                                 </span>Evénements</span></a>
-                                <a class="uik-nav-link-2__wrapper uik-nav-link-2__highlighted"><span class="uik-nav-link-2__text"><span class="uik-nav-link-2__icon"><i class="uikon">money_round</i></span>Clients</span></a>
-                                <a class="uik-nav-link-2__wrapper uik-nav-link-2__highlighted"  href="{{route('index_product')}}"><span class="uik-nav-link-2__text"><span class="uik-nav-link-2__icon"><i class="uikon">container</i></span>Produits/Gabarits</span></a>
+                                <a class="uik-nav-link-2__wrapper uik-nav-link-2__highlighted" href="{{route('index_customer')}}"><span class="uik-nav-link-2__text"><span class="uik-nav-link-2__icon"><i class="uikon">money_round</i></span>Clients</span></a>
+                                <a class="uik-nav-link-2__wrapper uik-nav-link-2__highlighted"  href="{{route('index_product')}}"><span class="uik-nav-link-2__text"><span class="uik-nav-link-2__icon"><i class="uikon">container</i></span>Produits</span></a>
+                                <a class="uik-nav-link-2__wrapper uik-nav-link-2__highlighted"  href="{{route('index_product')}}"><span class="uik-nav-link-2__text"><span class="uik-nav-link-2__icon"><i class="uikon">container</i></span>Gabarits</span></a>
+
                                 <a href="{{route('logout')}}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();" class="uik-nav-link-2__wrapper active uik-nav-link-2__highlighted" ><span class="uik-nav-link-2__text "><span class="uik-nav-link-2__icon"><i class="uikon">gallery_grid_view</i></span>Déconnexion</span></a><form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                                             {{ csrf_field() }}
                                         </form></div>
@@ -72,7 +73,52 @@
                 <div class="uik-container-v__container">
                     <div class="uik-top-bar__wrapper">
                         <div class="uik-top-bar-section__wrapper">
-                            <h2 class="uik-top-bar-title__wrapper uik-top-bar-title__large">Dashboard</h2></div>
+                        @if($_SERVER['REQUEST_URI'] == '/admin/Product/index')
+                            <h2 class="uik-top-bar-title__wrapper uik-top-bar-title__large">Gestion des produits</h2></div>
+
+                        @elseif($_SERVER['REQUEST_URI'] == '/admin/Event/index')
+                            <h2 class="uik-top-bar-title__wrapper uik-top-bar-title__large">Gestion des événements</h2></div>
+
+                        @elseif($_SERVER['REQUEST_URI'] == '/admin/Customer/index')
+                            <h2 class="uik-top-bar-title__wrapper uik-top-bar-title__large">Gestion des clients</h2></div>
+
+                        @elseif($_SERVER['REQUEST_URI'] == '/admin/User/index')
+                            <h2 class="uik-top-bar-title__wrapper uik-top-bar-title__large">Gestion des utilisateurs</h2></div>
+
+                        @elseif($_SERVER['REQUEST_URI'] == '/admin/User/add')
+                            <h2 class="uik-top-bar-title__wrapper uik-top-bar-title__large">Ajout d'un utilisateur</h2></div>
+
+                        @elseif($_SERVER['REQUEST_URI'] == '/admin/User/edit')
+                            <h2 class="uik-top-bar-title__wrapper uik-top-bar-title__large">Modification d'un utilisateur</h2></div>
+
+                        @elseif($_SERVER['REQUEST_URI'] == '/admin/Product/add')
+                            <h2 class="uik-top-bar-title__wrapper uik-top-bar-title__large">Ajout d'un produit</h2></div>
+
+                        @elseif($_SERVER['REQUEST_URI'] == '/admin/Product/edit')
+                            <h2 class="uik-top-bar-title__wrapper uik-top-bar-title__large">Modification d'un produit</h2></div>
+
+                        @elseif($_SERVER['REQUEST_URI'] == '/admin/Event/show')
+                            <h2 class="uik-top-bar-title__wrapper uik-top-bar-title__large">Page événement</h2></div>
+                        
+                        @elseif($_SERVER['REQUEST_URI'] == '/admin/Event/add')
+                            <h2 class="uik-top-bar-title__wrapper uik-top-bar-title__large">Ajout d'un événement</h2></div>
+
+                        @elseif($_SERVER['REQUEST_URI'] == '/admin/Event/edit')
+                            <h2 class="uik-top-bar-title__wrapper uik-top-bar-title__large">Modification d'un événement</h2></div>
+
+                        @elseif($_SERVER['REQUEST_URI'] == '/admin/Customer/show')
+                            <h2 class="uik-top-bar-title__wrapper uik-top-bar-title__large">Page client</h2></div>
+
+                        @elseif($_SERVER['REQUEST_URI'] == '/admin/Customer/add')
+                            <h2 class="uik-top-bar-title__wrapper uik-top-bar-title__large">Ajout d'un client</h2></div>
+
+                        @elseif($_SERVER['REQUEST_URI'] == '/admin/Customer/edit')
+                            <h2 class="uik-top-bar-title__wrapper uik-top-bar-title__large">Modification d'un client</h2></div>
+                        
+                        @else
+                            <h2 class="uik-top-bar-title__wrapper uik-top-bar-title__large">Détails</h2></div>
+
+                        @endif
                         <div class="uik-top-bar-section__wrapper">
                             <div class="uik-select__wrapper">
 

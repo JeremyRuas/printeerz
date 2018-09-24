@@ -67,8 +67,7 @@
         <br>
 
         {!! Form::label('Commentaires', 'Commentaires : ') !!}
-        <textarea class="form-control" name="commentaires" rows="4" cols="50">
-        </textarea>
+        <textarea class="form-control" name="commentaires" maxlength="140" rows="4" cols="50"></textarea>
 
         <br>
         {!! Form::submit('Ajouter', ['class' => 'btn btn-primary']) !!}       

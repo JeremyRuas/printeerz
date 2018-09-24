@@ -16,6 +16,8 @@ class ProductController extends Controller
     public function __construct(){
         $this->middleware(isActivate::class);
         $this->middleware(isAdmin::class);
+        $this->middleware('auth');
+
     }
     /**
      * Display a listing of the resource.
@@ -26,7 +28,8 @@ class ProductController extends Controller
     {
         $products = Product::all();
         $tailles = Taille::all();
-        return view('admin/Product.index', ['products' => $products, 'tailles' => $tailles]);
+        $couleurs = Couleur::all();
+        return view('admin/Product.index', ['products' => $products, 'tailles' => $tailles, 'couleurs' => $couleurs]);
     }
 
     /**

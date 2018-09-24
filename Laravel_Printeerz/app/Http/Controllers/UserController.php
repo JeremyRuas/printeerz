@@ -17,6 +17,7 @@ class UserController extends Controller
     public function __construct(){
         $this->middleware(isActivate::class);
         $this->middleware(isAdmin::class);
+        $this->middleware('auth');
     }
     /**
      * Display a listing of the resource.
@@ -120,13 +121,15 @@ class UserController extends Controller
                 Storage::delete('uploads' . $user->imageName);
             }
 
-            if ($request->file('image')->isValid()){
-                $imageName = time().'.'.request()->image->getClientOriginalExtension();           
-                request()->image->move(public_path('uploads'), $imageName);
+            if($request->file('image')){
+                if ($request->file('image')->isValid()){
+                    $imageName = time().'.'.request()->image->getClientOriginalExtension();           
+                    request()->image->move(public_path('uploads'), $imageName);
     
-                $user->imageName = $imageName;
+                    $user->imageName = $imageName;
+                }
             }
-
+            
             $user->nom = $request->nom;
             $user->prenom = $request->prenom;
             $user->email = $request->email;
@@ -147,12 +150,13 @@ class UserController extends Controller
             if(!is_null($user->imageName)){
                 Storage::delete('uploads' . $user->imageName);
             }
-
-            if ($request->file('image')->isValid()){
-                $imageName = time().'.'.request()->image->getClientOriginalExtension();           
-                request()->image->move(public_path('uploads'), $imageName);
-
-                $user->imageName = $imageName;
+            if($request->file('image')){
+                if ($request->file('image')->isValid()){
+                    $imageName = time().'.'.request()->image->getClientOriginalExtension();           
+                    request()->image->move(public_path('uploads'), $imageName);
+    
+                    $user->imageName = $imageName;
+                }
             }
 
             $user->nom = $request->nom;

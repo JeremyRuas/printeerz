@@ -12,7 +12,7 @@
             @foreach ($errors->all() as $error)
                 <li>{{ $error }}</li>
             @endforeach
-        </ul>+
+        </ul>
     </div>
 @endif
     {!! Form::open(['action' => array('ProductController@update', 'id' => $product->id), 'files' => true]) !!}

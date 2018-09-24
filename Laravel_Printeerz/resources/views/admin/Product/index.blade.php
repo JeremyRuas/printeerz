@@ -3,11 +3,11 @@
 @section('content')
 <div class="container">
 
-<h1 class="mt-3">Gestion des produits</h1>
 <br>
-  	<a href="{{action('ProductController@create')}}"><button type="button" title="Ajout d'un nouveau produit" class="btn btn-primary right btn-sm">Nouveau produit</button></a>
-<br>
-<br>
+  	<a href="{{action('ProductController@create')}}"><button type="button" title="Ajout d'un nouveau produit" class="btn btn-primary btn-sm">Nouveau produit</button></a>
+  	<a href="{{action('CouleurController@index')}}"><button type="button" title="Gestion des couleurs" class="btn btn-info btn-sm" role="group" aria-label="...">Couleurs/Tailles</button></a>
+    <a href="{{action('CouleurController@index')}}"><button type="button" title="Gestion des zones" class="btn btn-info btn-sm" role="group" aria-label="...">Zones</button></a>
+<hr>
 
 <table class="display table table-striped datatable" >
     <thead>
@@ -32,10 +32,16 @@
     @else
         <td> Femme </td>
     @endif
-    <?php $list = $product->tailles->pluck('nom');?>
-    <td>{{ $list }}</td>
-    <td>{{ $product->zones->pluck('nom') }}</td>
-    <td>{{ $product->couleurs->pluck('nom') }}</td>
+    <?php $list_tailles = $product->tailles->pluck('nom')->toArray();?>
+    <td><?php echo implode(', ', $list_tailles); ?></td>
+    
+    <?php $list_zones = $product->zones->pluck('nom')->toArray();?>
+    <td><?php echo implode(', ', $list_zones); ?></td>
+
+    <?php $list_couleurs = $product->couleurs->pluck('nom')->toArray();?>
+    <td><?php echo implode(', ', $list_couleurs); ?></td>
+
+
     <?php $commentaire = $product->commentaires;
     if(strlen($commentaire) > 50){
         $commentaire = substr($commentaire, 0, 50);

@@ -63,9 +63,7 @@
 
         <input type="hidden" class="form-control" name="actual_email" value= '{{$user->email}}'>
 
-        <br>
         
-        <br>
         {!! Form::submit('Modifier', ['class' => 'btn btn-primary']) !!}
     {!! Form::close() !!}
 

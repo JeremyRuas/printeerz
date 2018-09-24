@@ -3,9 +3,7 @@
 @section('content')
 <div class="container">
 
-<h1 class="mt-3">Gestion des utilisateurs</h1>
-
-  	<a href="{{action('UserController@create')}}"><button type="button" class="btn btn-primary btn-lg right btn-sm">Nouvel utilisateur</button></a>
+  	<a href="{{action('UserController@create')}}"><button type="button" class="btn btn-primary btn-lg right btn-sm mt-3">Nouvel utilisateur</button></a>
 <br>
 <br>
 
