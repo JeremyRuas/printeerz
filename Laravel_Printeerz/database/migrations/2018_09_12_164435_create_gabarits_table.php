@@ -15,7 +15,14 @@ class CreateGabaritsTable extends Migration
     {
         Schema::create('gabarits', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('nom');
             $table->timestamps();
+        });
+
+        Schema::create('product_gabarit', function(Blueprint $table){
+            $table->increments('id');
+            $table->integer('product_id')->unsigned()->index();
+            $table->integer('gabarit_id')->unsigned()->index();
         });
     }
 

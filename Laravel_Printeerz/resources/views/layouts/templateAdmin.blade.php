@@ -1,19 +1,22 @@
-<html lang="en" data-reactroot="">
+<html lang="fr" data-reactroot="">
 <?php //session_start();
 
 //$user_image = session('imageName');
 ?>
 <head>
     <meta content="IE=edge" http-equiv="X-UA-Compatible" />
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta charSet="utf-8" />
     <title>Printeerz Dashboard</title>
     <meta content="width=device-width, initial-scale=1" name="viewport" />
-    <script src="/js/bundle.js"></script>
     <link href="/css/styles.css" rel="stylesheet" />
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-    <link href="//cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
-    <link href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">   
     <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/datatable.css') }}"/>  
+    <link href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css">
+    <link href="//cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" type="text/css" href="{{ asset('slick/slick-theme.css') }}"/>
+    <link rel="stylesheet" type="text/css" href="{{ asset('slick/slick.css') }}"/>  
     
 </head>
 <body>
@@ -31,12 +34,29 @@
      
 @if(Auth::check())                         <!-- ~~~~~~~~________ PHOTO DE PROFIL DU USER ________~~~~~~~~ -->
 @if( Auth::user()->imageName)
-                                <div class="uik-nav-user__avatarWrapper"><img alt="bob" class="uik-nav-user__avatar" src="/uploads/{{ Auth::user()->imageName }}" /></div><span class="uik-nav-user__name">{{ Auth::user()->prenom }} {{ Auth::user()->nom }}</span><span class="uik-nav-user__textTop">{{ Auth::user()->role }}</span></div>
+                                <div class="uik-nav-user__avatarWrapper"><img alt="bob" class="uik-nav-user__avatar" src="/uploads/{{ Auth::user()->imageName }}" /></div><span class="uik-nav-user__name">{{ Auth::user()->prenom }} {{ Auth::user()->nom }}</span>
+
+                                @if(Auth::user()->role == 'admin')
+                                    <span class="uik-nav-user__textTop">Administrateur</span></div>
+                                @elseif(Auth::user()->role == 'opérateur')
+                                    <span class="uik-nav-user__textTop">Opérateur</span></div>
+                                @elseif(Auth::user()->role == 'technicien')
+                                    <span class="uik-nav-user__textTop">Technicien</span></div>
+                                @endif
 @else     
                                 <div class="uik-nav-user__avatarWrapper"><img alt="bob" class="uik-nav-user__avatar" src="/uploads/no_image.jpg" /></div><span class="uik-nav-user__name">{{ Auth::user()->prenom }} {{ Auth::user()->nom }}</span>
-                          
+                                         
+                                          <!-- ~~~~~~~~________ ROLE DU USER ________~~~~~~~~ -->
+                       
+    @if(Auth::user()->role == 'admin')
+                                <span class="uik-nav-user__textTop">Administrateur</span></div>
+    @elseif(Auth::user()->role == 'opérateur')
+                                <span class="uik-nav-user__textTop">Opérateur</span></div>
+    @elseif(Auth::user()->role == 'technicien')
+                                <span class="uik-nav-user__textTop">Technicien</span></div>
+    @endif
 
-                                <span class="uik-nav-user__textTop">{{ Auth::user()->role }}</span></div>
+    
 @endif
 @else
     <?php return redirect('errors/404');?>
@@ -47,22 +67,22 @@
                             <!-- ~~~~~~~~________ NAV DE GAUCHE ________~~~~~~~~ -->
 
                             <div class="uik-nav-link-two-container__wrapper">
-                            <a class="uik-nav-link-2__wrapper active uik-nav-link-2__highlighted">
+                            <a class="uik-nav-link-2__wrapper active uik-nav-link-2__highlighted" href="{{route('home')}}">
                                 <span class="uik-nav-link-2__text">
-                                    <span class="uik-nav-link-2__icon"><i class="uikon">gallery_grid_view</i></span>Dashboard</span>
+                                    <span class="uik-nav-link-2__icon" ><i class="uikon">stats</i></span>Dashboard</span>
                             </a>
                             <a class="uik-nav-link-2__wrapper uik-nav-link-2__highlighted" href="{{route('user_index')}}">
                                 <span class="uik-nav-link-2__text">
-                                <span class="uik-nav-link-2__icon" ><i class="uikon">calendar</i></span>Utilisateurs</span>
+                                <span class="uik-nav-link-2__icon" ><i class="uikon">profile_round</i></span>Utilisateurs</span>
                                 </a>
                             <a class="uik-nav-link-2__wrapper uik-nav-link-2__highlighted" href="{{route('index_event')}}">
-                                <span class="uik-nav-link-2__text"><span class="uik-nav-link-2__icon"><i class="uikon">inbox_paper_round</i>
+                                <span class="uik-nav-link-2__text"><span class="uik-nav-link-2__icon"><i class="uikon">calendar</i>
                                 </span>Evénements</span></a>
-                                <a class="uik-nav-link-2__wrapper uik-nav-link-2__highlighted" href="{{route('index_customer')}}"><span class="uik-nav-link-2__text"><span class="uik-nav-link-2__icon"><i class="uikon">money_round</i></span>Clients</span></a>
-                                <a class="uik-nav-link-2__wrapper uik-nav-link-2__highlighted"  href="{{route('index_product')}}"><span class="uik-nav-link-2__text"><span class="uik-nav-link-2__icon"><i class="uikon">container</i></span>Produits</span></a>
-                                <a class="uik-nav-link-2__wrapper uik-nav-link-2__highlighted"  href="{{route('index_product')}}"><span class="uik-nav-link-2__text"><span class="uik-nav-link-2__icon"><i class="uikon">container</i></span>Gabarits</span></a>
+                                <a class="uik-nav-link-2__wrapper uik-nav-link-2__highlighted" href="{{route('index_customer')}}"><span class="uik-nav-link-2__text"><span class="uik-nav-link-2__icon"><i class="uikon">profile_plus_round</i></span>Clients</span></a>
+                                <a class="uik-nav-link-2__wrapper uik-nav-link-2__highlighted"  href="{{route('index_product')}}"><span class="uik-nav-link-2__text"><span class="uik-nav-link-2__icon"><i class="uikon">money_round</i></span>Produits</span></a>
+                                {{-- <a class="uik-nav-link-2__wrapper uik-nav-link-2__highlighted"  href="{{route('index_product')}}"><span class="uik-nav-link-2__text"><span class="uik-nav-link-2__icon"><i class="uikon">gallery_grid_view</i></span>Gabarits</span></a> --}}
 
-                                <a href="{{route('logout')}}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();" class="uik-nav-link-2__wrapper active uik-nav-link-2__highlighted" ><span class="uik-nav-link-2__text "><span class="uik-nav-link-2__icon"><i class="uikon">gallery_grid_view</i></span>Déconnexion</span></a><form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                <a href="{{route('logout')}}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();" class="uik-nav-link-2__wrapper active uik-nav-link-2__highlighted" ><span class="uik-nav-link-2__text "><span class="uik-nav-link-2__icon"><i class="uikon">trending_down</i></span>Déconnexion</span></a><form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                                             {{ csrf_field() }}
                                         </form></div>
                             <!-- <section class="uik-nav-section__wrapper"><span class="uik-nav-section-title__wrapper">Recently viewed</span><a class="uik-nav-link__wrapper"><span class="uik-nav-link__text">Overall Performance</span><span class="uik-nav-link__rightEl">→</span></a><a class="uik-nav-link__wrapper"><span class="uik-nav-link__text">Invoice #845</span><span class="uik-nav-link__rightEl">→</span></a><a class="uik-nav-link__wrapper"><span class="uik-nav-link__text">Customer: Minerva Viewer</span><span class="uik-nav-link__rightEl">→</span></a></section> -->
@@ -73,6 +93,28 @@
                 <div class="uik-container-v__container">
                     <div class="uik-top-bar__wrapper">
                         <div class="uik-top-bar-section__wrapper">
+                        <?php $mystring = $_SERVER['REQUEST_URI'];
+                        $create = 'create';
+                        $edit = 'edit';
+                        $show = 'show';
+                        $home = 'home';
+                        $pos = strpos($mystring, $create); 
+                        $pos1 = strpos($mystring, $edit); 
+                        $pos2 = strpos($mystring, $show); 
+                        $pos3 = strpos($mystring, $home); 
+                        ?>
+                        
+                        @if($pos == true)
+                            <h2 class="uik-top-bar-title__wrapper uik-top-bar-title__large">Ajout</h2></div>
+                        @elseif($pos1 == true)
+                            <h2 class="uik-top-bar-title__wrapper uik-top-bar-title__large">Modification</h2></div>
+                        @elseif($pos2 == true)
+                            <h2 class="uik-top-bar-title__wrapper uik-top-bar-title__large">Détails</h2></div>
+                        @elseif($pos3 == true)
+                            <h2 class="uik-top-bar-title__wrapper uik-top-bar-title__large">Dashboard</h2></div>
+                        @endif
+
+
                         @if($_SERVER['REQUEST_URI'] == '/admin/Product/index')
                             <h2 class="uik-top-bar-title__wrapper uik-top-bar-title__large">Gestion des produits</h2></div>
 
@@ -84,43 +126,17 @@
 
                         @elseif($_SERVER['REQUEST_URI'] == '/admin/User/index')
                             <h2 class="uik-top-bar-title__wrapper uik-top-bar-title__large">Gestion des utilisateurs</h2></div>
-
-                        @elseif($_SERVER['REQUEST_URI'] == '/admin/User/add')
-                            <h2 class="uik-top-bar-title__wrapper uik-top-bar-title__large">Ajout d'un utilisateur</h2></div>
-
-                        @elseif($_SERVER['REQUEST_URI'] == '/admin/User/edit')
-                            <h2 class="uik-top-bar-title__wrapper uik-top-bar-title__large">Modification d'un utilisateur</h2></div>
-
-                        @elseif($_SERVER['REQUEST_URI'] == '/admin/Product/add')
-                            <h2 class="uik-top-bar-title__wrapper uik-top-bar-title__large">Ajout d'un produit</h2></div>
-
-                        @elseif($_SERVER['REQUEST_URI'] == '/admin/Product/edit')
-                            <h2 class="uik-top-bar-title__wrapper uik-top-bar-title__large">Modification d'un produit</h2></div>
-
-                        @elseif($_SERVER['REQUEST_URI'] == '/admin/Event/show')
-                            <h2 class="uik-top-bar-title__wrapper uik-top-bar-title__large">Page événement</h2></div>
                         
-                        @elseif($_SERVER['REQUEST_URI'] == '/admin/Event/add')
-                            <h2 class="uik-top-bar-title__wrapper uik-top-bar-title__large">Ajout d'un événement</h2></div>
-
-                        @elseif($_SERVER['REQUEST_URI'] == '/admin/Event/edit')
-                            <h2 class="uik-top-bar-title__wrapper uik-top-bar-title__large">Modification d'un événement</h2></div>
-
-                        @elseif($_SERVER['REQUEST_URI'] == '/admin/Customer/show')
-                            <h2 class="uik-top-bar-title__wrapper uik-top-bar-title__large">Page client</h2></div>
-
-                        @elseif($_SERVER['REQUEST_URI'] == '/admin/Customer/add')
-                            <h2 class="uik-top-bar-title__wrapper uik-top-bar-title__large">Ajout d'un client</h2></div>
-
-                        @elseif($_SERVER['REQUEST_URI'] == '/admin/Customer/edit')
-                            <h2 class="uik-top-bar-title__wrapper uik-top-bar-title__large">Modification d'un client</h2></div>
-                        
-                        @else
-                            <h2 class="uik-top-bar-title__wrapper uik-top-bar-title__large">Détails</h2></div>
-
+                        @elseif($_SERVER['REQUEST_URI'] == '/admin/Couleur/index')
+                            <h2 class="uik-top-bar-title__wrapper uik-top-bar-title__large">Gestion des tailles & couleurs</h2></div>
                         @endif
+
+                        <!-- ~~~~~~~~________ TITRE POUR CHAQUE PAGE EN FONCTION DE L'URI ________~~~~~~~~ -->
+
                         <div class="uik-top-bar-section__wrapper">
                             <div class="uik-select__wrapper">
+
+                                 
 
                                 <!-- ~~~~~~~~________ BOUTON CHOIX DE LANGUE ________~~~~~~~~ -->
                                 <!--<button class="uik-btn__base uik-select__valueRendered" type="button">
@@ -135,291 +151,39 @@
                         </div>
                     </div>                                       
                     @yield('content')
-                    <!--<div class="uik-layout-main__wrapper">
-                        <div class="uik-layout-main__wrapperInner">
-                            <div class="uik-widget__wrapper uik-widget__margin">
-                                <div class="uik-widget-title__wrapper">                                
-                                    <h3>Daily Visitors</h3>
-                                    <div class="uik-analytics-home__headerActions">
-                                        <div class="uik-select__wrapper">
-                                            <button class="uik-btn__base uik-select__valueRendered" type="button">
-                                                <div class="uik-btn__content">
-                                                    <div class="uik-select__valueRenderedWrapper">
-                                                        <div class="uik-select__valueWrapper">December</div>
-                                                        <div class="uik-select__arrowWrapper"></div>
-                                                    </div>
-                                                </div>
-                                            </button>
-                                        </div>
-                                        <div class="uik-select__wrapper">
-                                            <button class="uik-btn__base uik-select__valueRendered" type="button">
-                                                <div class="uik-btn__content">
-                                                    <div class="uik-select__valueRenderedWrapper">
-                                                        <div class="uik-select__valueWrapper">2018</div>
-                                                        <div class="uik-select__arrowWrapper"></div>
-                                                    </div>
-                                                </div>
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="uik-widget-content__wrapper">
-                                    <div class="uik-chartjs__wrapper">
-                                        <div class="uik-chartjs__canvasWrapper">
-                                            <div class="uik-chartjs__tooltipWrapper">
-                                                <canvas id="chart"></canvas>
-                                                <div class="uik-chartjs__tooltip">
-                                                    <div class="tooltip__content">
-                                                        <table></table>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="uik-analytics-home__miniChartContainer">
-                                <div class="uik-widget__wrapper uik-widget-chart-summary__wrapper uik-analytics-home__miniChart uik-widget__padding uik-widget__margin"><span class="uik-widget-chart-summary__label">Realtime users</span><span class="uik-widget-chart-summary__value">848</span><span class="uik-widget-chart-summary__diff">+10.00%<i class="uikon uik-widget-chart-summary__icon">trending_up</i></span>
-                                    <div class="uik-chartjs__wrapper uik-widget-chart-summary__chart">
-                                        <div class="uik-chartjs__canvasWrapper">
-                                            <div class="uik-chartjs__tooltipWrapper">
-                                                <canvas id="chart"></canvas>
-                                                <div class="uik-chartjs__tooltip">
-                                                    <div class="tooltip__content">
-                                                        <table></table>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="uik-widget__wrapper uik-widget-chart-summary__wrapper uik-analytics-home__miniChart uik-widget__padding uik-widget__margin"><span class="uik-widget-chart-summary__label">Total Visits</span><span class="uik-widget-chart-summary__value">54,598</span><span class="uik-widget-chart-summary__diff uik-widget-chart-summary__down">-11.81%<i class="uikon uik-widget-chart-summary__icon">trending_down</i></span>
-                                    <div class="uik-chartjs__wrapper uik-widget-chart-summary__chart">
-                                        <div class="uik-chartjs__canvasWrapper">
-                                            <div class="uik-chartjs__tooltipWrapper">
-                                                <canvas id="chart"></canvas>
-                                                <div class="uik-chartjs__tooltip">
-                                                    <div class="tooltip__content">
-                                                        <table></table>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="uik-widget__wrapper uik-widget-chart-summary__wrapper uik-analytics-home__miniChart uik-widget__padding uik-widget__margin"><span class="uik-widget-chart-summary__label">Bounce Rate</span><span class="uik-widget-chart-summary__value">73.67</span><span class="uik-widget-chart-summary__diff">+12.20%<i class="uikon uik-widget-chart-summary__icon">trending_up</i></span>
-                                    <div class="uik-chartjs__wrapper uik-widget-chart-summary__chart">
-                                        <div class="uik-chartjs__canvasWrapper">
-                                            <div class="uik-chartjs__tooltipWrapper">
-                                                <canvas id="chart"></canvas>
-                                                <div class="uik-chartjs__tooltip">
-                                                    <div class="tooltip__content">
-                                                        <table></table>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="uik-widget__wrapper uik-widget-chart-summary__wrapper uik-analytics-home__miniChart uik-widget__padding uik-widget__margin"><span class="uik-widget-chart-summary__label">Visit Duration</span><span class="uik-widget-chart-summary__value">1m 4s</span><span class="uik-widget-chart-summary__diff">+19.68%<i class="uikon uik-widget-chart-summary__icon">trending_up</i></span>
-                                    <div class="uik-chartjs__wrapper uik-widget-chart-summary__chart">
-                                        <div class="uik-chartjs__canvasWrapper">
-                                            <div class="uik-chartjs__tooltipWrapper">
-                                                <canvas id="chart"></canvas>
-                                                <div class="uik-chartjs__tooltip">
-                                                    <div class="tooltip__content">
-                                                        <table></table>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="uik-analytics-home__tables">
-                                <div class="uik-widget__wrapper uik-analytics-home__widgetMostVisited uik-widget__margin">
-                                    <div class="uik-widget-title__wrapper">
-                                        <h3>Most Visited Pages</h3></div>
-                                    <table class="uik-widget-table__wrapper">
-                                        <thead>
-                                            <tr>
-                                                <th>Page Name</th>
-                                                <th>Visitors</th>
-                                                <th>Unique Page Visits</th>
-                                                <th>Bounce Rate</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <td>
-                                                    <div class="uik-analytics-most-visited__contentPageName">/store/<i class="uikon uik-analytics-most-visited__iconTrend">trending_up</i></div>
-                                                </td>
-                                                <td>4,890</td>
-                                                <td>3,985</td>
-                                                <td>
-                                                    <div class="uik-analytics-most-visited__contentBounceRate">85,17%
-                                                        <div class="uik-chartjs__wrapper uik-analytics-most-visited__minichart">
-                                                            <div class="uik-chartjs__canvasWrapper">
-                                                                <div class="uik-chartjs__tooltipWrapper">
-                                                                    <canvas id="chart"></canvas>
-                                                                    <div class="uik-chartjs__tooltip">
-                                                                        <div class="tooltip__content">
-                                                                            <table></table>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <div class="uik-analytics-most-visited__contentPageName">/store/symbol-styleguides<i class="uikon uik-analytics-most-visited__iconTrend">trending_up</i></div>
-                                                </td>
-                                                <td>1,824</td>
-                                                <td>2,391</td>
-                                                <td>
-                                                    <div class="uik-analytics-most-visited__contentBounceRate">38,37%
-                                                        <div class="uik-chartjs__wrapper uik-analytics-most-visited__minichart">
-                                                            <div class="uik-chartjs__canvasWrapper">
-                                                                <div class="uik-chartjs__tooltipWrapper">
-                                                                    <canvas id="chart"></canvas>
-                                                                    <div class="uik-chartjs__tooltip">
-                                                                        <div class="tooltip__content">
-                                                                            <table></table>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <div class="uik-analytics-most-visited__contentPageName">/store/dashboard-ui-kit<i class="uikon uik-analytics-most-visited__iconTrend">trending_up</i></div>
-                                                </td>
-                                                <td>8,123</td>
-                                                <td>5,293</td>
-                                                <td>
-                                                    <div class="uik-analytics-most-visited__contentBounceRate">67,13%
-                                                        <div class="uik-chartjs__wrapper uik-analytics-most-visited__minichart">
-                                                            <div class="uik-chartjs__canvasWrapper">
-                                                                <div class="uik-chartjs__tooltipWrapper">
-                                                                    <canvas id="chart"></canvas>
-                                                                    <div class="uik-chartjs__tooltip">
-                                                                        <div class="tooltip__content">
-                                                                            <table></table>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <div class="uik-analytics-most-visited__contentPageName">/store/webflow-cards.html<i class="uikon uik-analytics-most-visited__iconTrend">trending_up</i></div>
-                                                </td>
-                                                <td>2,440</td>
-                                                <td>1,789</td>
-                                                <td>
-                                                    <div class="uik-analytics-most-visited__contentBounceRate">39,59%
-                                                        <div class="uik-chartjs__wrapper uik-analytics-most-visited__minichart">
-                                                            <div class="uik-chartjs__canvasWrapper">
-                                                                <div class="uik-chartjs__tooltipWrapper">
-                                                                    <canvas id="chart"></canvas>
-                                                                    <div class="uik-chartjs__tooltip">
-                                                                        <div class="tooltip__content">
-                                                                            <table></table>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                                <div class="uik-widget__wrapper uik-widget__margin">
-                                    <div class="uik-widget-title__wrapper">
-                                        <h3>Social Media Traffic</h3></div>
-                                    <table class="uik-widget-table__wrapper uik-analytics-social-media__table">
-                                        <thead>
-                                            <tr>
-                                                <th>Network</th>
-                                                <th>Visitors</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <td>Instagram</td>
-                                                <td>
-                                                    <div class="uik-analytics-social-media__contentVisitors">4,890
-                                                        <div class="uik-progress-bar__wrapper uik-analytics-social-media__progressBar">
-                                                            <div class="uik-progress-bar__progressLine" style="width:70%"></div>
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>Facebook</td>
-                                                <td>
-                                                    <div class="uik-analytics-social-media__contentVisitors">1,824
-                                                        <div class="uik-progress-bar__wrapper uik-analytics-social-media__progressBar">
-                                                            <div class="uik-progress-bar__progressLine" style="width:13%"></div>
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>Twitter</td>
-                                                <td>
-                                                    <div class="uik-analytics-social-media__contentVisitors">8,123
-                                                        <div class="uik-progress-bar__wrapper uik-analytics-social-media__progressBar">
-                                                            <div class="uik-progress-bar__progressLine" style="width:37%"></div>
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>LinkedIn</td>
-                                                <td>
-                                                    <div class="uik-analytics-social-media__contentVisitors">63
-                                                        <div class="uik-progress-bar__wrapper uik-analytics-social-media__progressBar">
-                                                            <div class="uik-progress-bar__progressLine" style="width:57%"></div>
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                    </table>-->
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+                         
     <!-- Scripts -->
+    
     <script src="{{ asset('js/app.js') }}"></script>
-    <script
-  src="https://code.jquery.com/jquery-3.3.1.min.js"
-  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
-  crossorigin="anonymous"></script>
+    <script src="{{ asset('js/datatable.js') }}"></script>
+    <script type="text/javascript" src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+    <script type="text/javascript" src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+    {{-- <script
+    src="{{ asset('js/ajax.js') }}"></script> --}}
+
     <script src="//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
     <script>$(document).ready(function() {
-    $('.datatable').DataTable({
+        if($(".datatable")[0]){
+            $('.datatable').DataTable({
       "language": {
         "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/French.json"
       }
     });
-} );</script>
+        }
+} );
+
+</script>
+    <script type="text/javascript" src="{{ asset('slick/slick.min.js') }}"></script>
+    {{-- <script type="text/javascript" src="{{ asset('js/form.js') }}"></script> --}}
+    <script type="text/javascript" src="{{ asset('js/ajax.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/js.js') }}"></script>
+
+    <!-- <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script> -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+
+@yield('javascripts')
+
 </body>
 
 </html>

@@ -91,6 +91,9 @@ Route::post('admin/Event/update', 'EventController@update')->name('update_event'
 
 Route::get('admin/Event/destroy/{id}', 'EventController@destroy')->name('destroy_event');
 
+Route::get('admin/Event/show/comme,t', 'CommentController@addComment')->name('comment_event');
+
+
 /*~~~~~~~~~~~___________Couleurs Route__________~~~~~~~~~~~~*/
 
 Route::get('admin/Couleur/index', 'CouleurController@index')->name('index_couleur');
@@ -138,3 +141,17 @@ Route::get('admin/Zone/edit/{id}', 'ZoneController@edit')->name('edit_zone');
 Route::post('admin/Zone/update', 'ZoneController@update')->name('update_zone');
 
 Route::get('admin/Zone/destroy/{id}', 'ZoneController@destroy')->name('destroy_zone');
+
+/*~~~~~~~~~~~___________Comments Route__________~~~~~~~~~~~~*/
+
+Route::post('comment/add', 'CommentController@addComment');
+
+Route::delete('comment/delete/{id}', 'CommentController@destroy')->name('destroy_comment');
+
+/*~~~~~~~~~~~___________Front Route__________~~~~~~~~~~~~*/
+
+Route::get('front/index', 'FrontController@index')->name('index_front');
+
+Route::post('comment/add', 'CommentController@addComment');
+
+Route::delete('comment/delete/{id}', 'CommentController@destroy')->name('destroy_comment');

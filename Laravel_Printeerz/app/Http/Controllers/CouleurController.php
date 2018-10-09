@@ -44,15 +44,29 @@ class CouleurController extends Controller
      */
     public function store(Request $request)
     {
-        $validatedData = $request->validate([
-            'nom' => 'required|string|max:255'
+        if($request){
+            $validatedData = $request->validate([
+                'nom' => 'required|string|max:255'
+    
+            ]);
+            $couleur = new Couleur;
+            $couleur->nom = $request->nom;
+            
+            $couleur->save();
+            //return redirect('admin/Couleur/index')->with('status', 'La couleur a été correctement ajouté.');
 
-        ]);
-        $couleur = new Couleur;
-        $couleur->nom = $request->nom;
+            $response = array(
+                'status' => 'success',
+                'msg' => 'Setting created successfully',
+                'couleur' => $couleur
+            );
+            return response()->json($response);
+        } 
+        else{
+            return 'no';
+        }
         
-        $couleur->save();
-        return redirect('admin/Couleur/index');
+        
     }
 
     /**
@@ -86,14 +100,15 @@ class CouleurController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
         if (request('actual_nom') == request('nom')){
             $validatedData = $request->validate([
                 'nom' => 'required|string|max:255'
     
             ]);
-            $couleur = new Couleur;
+            $id = $request->id;
+            $couleur = Couleur::find($id);
             $couleur->nom = $request->nom;
         }        
         else{
@@ -101,11 +116,12 @@ class CouleurController extends Controller
                 'nom' => 'required|string|max:255'
     
             ]);
-            $couleur = new Couleur;
+            $id = $request->id;
+            $couleur = Couleur::find($id);
             $couleur->nom = $request->nom;
         }
         $couleur->save();
-        return redirect('admin/Couleur/index');
+        return redirect('admin/Couleur/index')->with('status', 'La couleur a été correctement modifié.');
     }
 
     /**
@@ -118,6 +134,6 @@ class CouleurController extends Controller
     {
         $couleur = Couleur::find($id);
         $couleur->delete();
-        return redirect('admin/Couleur/index');
+        return redirect('admin/Couleur/index')->with('status', 'La couleur a été correctement supprimé.');
     }
 }

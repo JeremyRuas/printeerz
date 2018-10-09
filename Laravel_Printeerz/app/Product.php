@@ -6,11 +6,15 @@ use Illuminate\Database\Eloquent\Model;
 use App\Couleur;
 use App\Zone;
 use App\Taille;
+use App\Event;
+use App\ImageZone;
+use App\Gabarit;
+
 
 class Product extends Model
 {
     protected $fillable = [
-        'nom', 'reference', 'sexe', 'commentaire', 'tailles_list', 'couleurs_list','zones_list','imageName'
+        'nom', 'reference', 'sexe', 'description', 'tailles_list', 'couleurs_list', 'zones_list','imageName', 'color1', 'color2', 'color3', 'color1_coeur_imageName', 'color2_coeur_imageName', 'color3_coeur_imageName'
     ];
 
     /*~~~~~~~~~~~_____Relation Many to Many avec les tailles dispo____~~~~~~~~~~~~*/
@@ -61,5 +65,36 @@ class Product extends Model
         return $this->zones()->sync($value);
     }
 
+    public function events() {
+        return $this->hasMany('App\Event');
+    }
+    
 
+    public function imageZones() {
+        return $this->hasMany('App\ImageZone');
+    }
+
+    public function getImageZonesListAttribute(){
+        if($this->id){
+            return $this->imageZones->pluck('id');
+        }            
+    }
+
+    public function setImageZonesListAttribute($value){
+        return $this->imageZones()->sync($value);
+    }
+
+    public function gabarits() {
+        return $this->belongsToMany('App\Gabarit');
+    }
+
+    public function getGabaritsListAttribute(){
+        if($this->id){
+            return $this->gabarits->pluck('id');
+        }            
+    }
+
+    public function setGabaritsListAttribute($value){
+        return $this->gabarits()->sync($value);
+    }
 }

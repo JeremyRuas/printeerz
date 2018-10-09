@@ -2,16 +2,20 @@
 
 @section('content')
 <div class="container">
+@if (session('status'))
+    <div class="alert alert-success mt-1">
+        {{ session('status') }}
+    </div>
+@endif
 
-  	<a href="{{action('UserController@create')}}"><button type="button" class="btn btn-primary btn-lg right btn-sm mt-3">Nouvel utilisateur</button></a>
+  	<a href="{{action('UserController@create')}}"><button type="button" class="btn btn-primary btn-lg right btn-sm mt-2 mb-2" style="float:right"><i class="uikon">add</i> Nouvel utilisateur</button></a>
+      <br>
 <br>
-<br>
-
 <table class="display table table-striped datatable" >
     <thead>
 		<tr>
             <th>#</th>
-            <th>Avatar</th>
+            <th></th>
             <th>Prénom</th>
             <th>Nom</th>
             <th>Email</th>
@@ -45,13 +49,13 @@
 @else
 <td>Désactivé</td>
 @endif
-<td><a class='btn btn-success btn-sm' href="{{route('edit_user', $user->id)}}"> Modifier </a>
+<td><a class='btn btn-success btn-sm' href="{{route('edit_user', $user->id)}}"><i class="uikon">edit</i> Modifier </a>
 @if ($user->activate == 1)
-<a class='btn btn-secondary btn-sm' href="{{route('desactivate_user', $user->id)}}"> Désactiver </a>
+<a class='btn btn-secondary btn-sm' onclick="return confirm('Êtes-vous sûr?')" href="{{route('desactivate_user', $user->id)}}"> Désactiver </a>
 @else 
- <a class='btn btn-success btn-sm' href="{{route('activate_user', $user->id)}}">   Réactiver   </a></td>
+ <a class='btn btn-success btn-sm' href="{{route('activate_user', $user->id)}}"><i class="uikon">check</i>  Réactiver   </a></td>
 @endif
-<td><a class='btn btn-danger btn-sm' href="{{route('destroy_user', $user->id)}}"> Supprimer </a></td></tr>
+<td><a class='btn btn-danger btn-sm' onclick="return confirm('Êtes-vous sûr?')" href="{{route('destroy_user', $user->id)}}"> Supprimer </a></td></tr>
 
 @endforeach
     </tbody>

@@ -2,11 +2,14 @@
 
 @section('content')
 <div class="container">
+@if (session('status'))
+    <div class="alert alert-success mt-1">
+        {{ session('status') }}
+    </div>
+@endif
 
-<br>
-  	<a href="{{action('TailleController@create')}}"><button type="button" title="Ajout d'une nouvelle taille" class="btn btn-primary right btn-sm mt-3">Nouvelle taille</button></a>
-<br>
-<br>
+
+  	<a href="{{action('TailleController@create')}}"><button type="button" title="Ajout d'une nouvelle taille" class="btn btn-primary right btn-sm mt-2">Nouvelle taille</button></a>
 
 <table class="display table table-striped datatable" >
     <thead>

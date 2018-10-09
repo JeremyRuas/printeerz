@@ -19,10 +19,10 @@ class CreateEventsTable extends Migration
             $table->integer('customer_id')->nullable();
             $table->string('annonceur');
             $table->string('logoName')->nullable();
-            $table->string('lieu');
-            $table->datetime('date');
-            $table->string('type');
-            $table->text('commentaires')->nullable();
+            $table->string('lieu')->default('Inconnu');
+            $table->datetime('date')->nullable();
+            $table->string('type')->nullable();
+            $table->text('description')->nullable();
             $table->timestamps();
         });
 
@@ -30,8 +30,18 @@ class CreateEventsTable extends Migration
             $table->increments('id');
             $table->integer('customer_id')->unsigned()->index();
             $table->integer('event_id')->unsigned()->index();
-            //$table->foreign('customer_id')->references('id')->on('customers')->onDelete('cascade');
-            // $table->foreign('event_id')->references('id')->on('events')->onDelete('cascade');
+        });
+
+        Schema::create('event_product', function(Blueprint $table){
+            $table->increments('id');
+            $table->integer('product_id')->unsigned()->index();
+            $table->integer('event_id')->unsigned()->index();
+        });
+
+        Schema::create('comment_event', function(Blueprint $table){
+            $table->increments('id');
+            $table->integer('comment_id')->unsigned()->index();
+            $table->integer('event_id')->unsigned()->index();
         });
     }
 

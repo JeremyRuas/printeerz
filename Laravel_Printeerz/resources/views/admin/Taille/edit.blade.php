@@ -20,16 +20,17 @@
         {{csrf_field()}}
         <div class="form-group">
         {!! Form::label('nom', 'Entrer la taille : ') !!}
-        {!! Form::text('nom', null, ['class' => 'form-control', 'placeholder' => 'Taille:']) !!}
+        {!! Form::text('nom', $taille->nom, ['class' => 'form-control', 'placeholder' => 'Taille:']) !!}
         </div>
         <input type="hidden" class="form-control" name="actual_nom" value= '{{ $taille->nom }}'>
 
         <br>
-        {!! Form::submit('Modifer', ['class' => 'btn btn-primary btn-sm']) !!}       
+        {!! Form::submit('Modifier', ['class' => 'btn btn-primary btn-sm', 'style' => 'float: right']) !!}       
+
+        <a class='btn btn-secondary btn-sm' style="float: left" href="{{route('index_couleur')}}"> Retour </a>
 
         {!! Form::close() !!}
 
-        <a class='btn btn-secondary btn-sm' href="{{route('index_product')}}"> Retour </a>
     </div>
 </div>
 @endsection

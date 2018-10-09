@@ -2,9 +2,14 @@
 
 @section('content')
 <div class="container">
+@if (session('status'))
+    <div class="alert alert-success mt-1">
+        {{ session('status') }}
+    </div>
+@endif
 
-<br>
-  	<a href="{{action('EventController@create')}}"><button type="button" title="Ajout d'un nouvel événement" class="btn btn-primary right btn-sm">Nouvel événement</button></a>
+
+  	<div><a href="{{action('EventController@create')}}"><button type="button" title="Ajout d'un nouvel événement" class="btn btn-primary right btn-sm mt-2 mb-2" style="float:right"><i class="uikon">add</i> Nouvel événement</button></a></div>
 <br>
 <br>
 <table class="display table table-striped datatable" >
@@ -12,13 +17,12 @@
 		<tr>
             <th>Avatar</th>
             <th>Noms</th>
-            <th>Annonceurs</th>
-            <th>Clients</th>
-            <th>Lieux</th>
-            <th>Types</th>
+            <th>Annonceur</th>
+            <th>Client</th>
+            <th>Lieu</th>
+            <th>Type</th>
             <th>Date</th>
-            <th>Commentaires</th>
-            <th>Actions</th>
+            <th>Description</th>
             <th></th>
         </tr>
     </thead>
@@ -41,15 +45,15 @@
 
     <td>{{ $event->lieu }}</td>
     <td>{{ $event->type }}</td>
-    <td>{{ $event->date }}</td>
-    <?php $commentaire = $event->commentaires;
-    if(strlen($commentaire) > 50){
-        $commentaire = substr($commentaire, 0, 50);
-        $commentaire .= '...';
+    <td>{{ date('d-m-Y', strtotime($event->date)) }}</td>
+    <?php $description = $event->description;
+    if(strlen($description) > 50){
+        $description = substr($description, 0, 50);
+        $description .= '...';
     }
     ?>
-    @if(strlen($commentaire) != 0)
-    <td>{{ $commentaire }}</td>
+    @if(strlen($description) != 0)
+    <td>{{ $description }}</td>
     @else
     <td>{{ '...' }}</td>
     @endif
@@ -58,4 +62,5 @@
     </tbody>
     </div>
 
+    
 @endsection

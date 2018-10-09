@@ -6,7 +6,6 @@
 
 <div class="container">
 
-<h1 class="mt-3" >Ajout d'un utilisateur</h1>
 @if ($errors->any())
     <div class="alert alert-danger">
         <ul>
@@ -18,7 +17,7 @@
 @endif
     {!! Form::open(['action' => 'UserController@store', 'files' => true]) !!}
         {{csrf_field()}}
-        <div class="form-group">
+        <div class="form-group mt-2">
 
         {!! Form::label('prenom', 'Entrer le prénom : ') !!}
         {!! Form::text('prenom', null, ['class' => 'form-control']) !!}
@@ -57,7 +56,6 @@
 
         {!! Form::label('image', 'Ajouter une photo de profil: ') !!}
         {!! Form::file('image', array('class' => 'form-control')) !!}
-        <br>
         
         <!--<div class="form-check">
             <input class="form-check-input" type="radio" name="isAdmin" id="isAdmin_radio" value="0" checked>
@@ -71,12 +69,12 @@
                 Administrateur
             </label>
         </div>-->
-        <br>
-        {!! Form::submit('Ajouter', ['class' => 'btn btn-primary']) !!}       
+        {!! Form::submit('Ajouter', ['class' => 'btn btn-primary btn-sm mt-3 mb-3', 'style' => 'float: right']) !!}       
+
+        <a class='btn btn-secondary btn-sm mt-3 mb-3' style="float: left" href="{{route('user_index')}}"> Retour </a>
 
         {!! Form::close() !!}
 
-        <a class='btn btn-secondary' href="{{route('user_index')}}"> Retour </a>
     </div>
 </div>
 @endsection

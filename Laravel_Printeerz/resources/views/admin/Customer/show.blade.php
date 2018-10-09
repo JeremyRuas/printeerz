@@ -21,15 +21,22 @@
     <h5 class="mt-3">SIREN: </h5>
     <div>{{ $customer->siren }}</div>
 
+    <h5 class="mt-3">Activité: </h5>
+    <div>{{ $customer->activite }}</div>
+
     <h5 class="mt-3">Contact: </h5>
     <div>{{ $customer->contact_poste .'- '. $customer->contact_prenom .' '. $customer->contact_nom .' '. $customer->contact_telephone }}</div>
 
     <h5 class="mt-3">Liste des événements: </h5>
-    @foreach($customer->event as $event)
-    <div>{{ '- '. $event->nom }}</div>
-    @endforeach
-    
-    
+
+    @if(!empty($customer->event))
+        @foreach($customer->event as $event)
+        <div>{{ '- '. $event->nom }}</div>
+        @endforeach
+    @else
+        <div><i>Vide</i></div>
+    @endif
+
     <h5 class="mt-3">Informations: </h5>
 
     @if(strlen($customer->informations) != 0)
@@ -40,8 +47,8 @@
     @endif
     <br>
 
-    <a role="button" class='btn btn-success btn-sm' href="{{route('edit_customer', $customer->id)}}"  title="Modification du produit">Modifier</a>
-    <a role="button" class='btn btn-danger btn-sm' href="{{route('destroy_customer', $customer->id)}}"  title="Suppression du produit">Supprimer</a>
+    <a role="button" class='btn btn-success btn-sm' href="{{route('edit_customer', $customer->id)}}"  title="Modification du produit"><i class="uikon">edit</i> Modifier</a>
+    <a role="button" class='btn btn-danger btn-sm' onclick="return confirm('Êtes-vous sûr?')" href="{{route('destroy_customer', $customer->id)}}"  title="Suppression du produit"> Supprimer</a>
     <a class='btn btn-secondary btn-sm' href="{{route('index_customer')}}"> Retour </a>
     <hr>
 </div>

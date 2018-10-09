@@ -16,6 +16,7 @@ class CreateZonesTable extends Migration
         Schema::create('zones', function (Blueprint $table) {
             $table->increments('id');
             $table->string('nom');
+            $table->string('imageName')->nullable();
             $table->timestamps();
         });
 
@@ -23,8 +24,8 @@ class CreateZonesTable extends Migration
             $table->increments('id');
             $table->integer('product_id')->unsigned()->index();
             $table->integer('zone_id')->unsigned()->index();
-            $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade');
-            $table->foreign('zone_id')->references('id')->on('zones')->onDelete('cascade');
+            // $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade');
+            // $table->foreign('zone_id')->references('id')->on('zones')->onDelete('cascade');
         });
     }
 

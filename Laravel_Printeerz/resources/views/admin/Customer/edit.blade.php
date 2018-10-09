@@ -5,7 +5,6 @@
 
 <div class="container">
 
-<h1 class="mt-3" >Modification d'un produit</h1>
 @if ($errors->any())
     <div class="alert alert-danger">
         <ul>
@@ -15,70 +14,66 @@
         </ul>
     </div>
 @endif
-    {!! Form::open(['action' => array('ProductController@update', 'id' => $product->id), 'files' => true]) !!}
+    {!! Form::open(['action' => array('CustomerController@update', 'id' => $customer->id), 'files' => true]) !!}
 
         {{csrf_field()}}
         <div class="form-group">
-
-        <br>
-        {!! Form::label('nom', 'Entrer le nom : ') !!}
-        {!! Form::text('nom', $product->nom, ['class' => 'form-control']) !!}
-        <br>
-
-        {!! Form::label('référence', 'Entrer la référence fournisseur : ') !!}
-        {!! Form::text('reference', $product->reference, ['class' => 'form-control']) !!}
-        <br>
-
-        {!! Form::label('sexe', 'Sélectionner le sexe : ') !!}
-        <div class="form-check">
-            <input class="form-check-input" type="radio" name="sexe" value="homme" checked>
-            <label class="form-check-label" >
-                Homme
-            </label>
+        {!! Form::label('denomination', 'Entrer la dénomination : ') !!}
+        {!! Form::text('denomination', $customer->denomination, ['class' => 'form-control', 'placeholder' => 'Dénomination:']) !!}
         </div>
-        <div class="form-check">
-            <input class="form-check-input" type="radio" name="sexe" value="femme">
-            <label class="form-check-label">
-                Femme
-            </label>
-        </div>
-        <br>
 
         <div class="form-group">
-            {!! Form::label('tailles_list[]', 'Sélectionner les tailles disponibles  : ') !!}
-            {!! Form::select('tailles_list[]', App\Taille::pluck('nom', 'id'), $product->tailles->pluck('id'), ['class' => 'form-control', 'multiple' => 'true']) !!}
+            {!! Form::label('adresse_complete', 'Entrer l\'adresse : ') !!}
+            {!! Form::text('adresse', $customer->adresse, ['class' => 'form-control', 'placeholder' => 'Adresse:']) !!}
+            {!! Form::text('code_postal', $customer->code_postal, ['class' => 'form-control mt-2', 'placeholder' => 'Code postal:']) !!}
+            {!! Form::text('ville', $customer->ville, ['class' => 'form-control mt-2', 'placeholder' => 'Ville:']) !!}
         </div>
 
-        <br>
 
         <div class="form-group">
-            {!! Form::label('couleurs_list[]', 'Sélectionner les couleurs disponibles  : ') !!}
-            {!! Form::select('couleurs_list[]', App\Couleur::pluck('nom', 'id'), $product->couleurs->pluck('id'), ['class' => 'form-control', 'multiple' => 'true']) !!}
+        {!! Form::label('activite', 'Entrer l\'activité : ') !!}
+        {!! Form::text('activite', $customer->activite, ['class' => 'form-control', 'placeholder' => 'Activité:']) !!}
         </div>
-        <br>
-        
+
         <div class="form-group">
-            {!! Form::label('zones_list[]', 'Sélectionner les zones disponibles  : ') !!}
-            {!! Form::select('zones_list[]', App\Zone::pluck('nom', 'id'), $product->zones->pluck('id'), ['class' => 'form-control', 'multiple' => 'true']) !!} 
+        {!! Form::label('siren', 'Entrer le SIREN : ') !!}
+        {!! Form::text('siren', $customer->siren, ['class' => 'form-control', 'placeholder' => 'SIREN:']) !!}
         </div>
 
-        <br>
+        {!! Form::label('contact', 'Entrer le contact : ') !!}
+            <div class="row">
+                <div class="col-6 mb-2">
+                {!! Form::text('contact_nom', $customer->contact_nom, ['class' => 'form-control', 'placeholder' => 'Nom:']) !!}
+                </div>
+                <div class="col-6 mb-2">
+                {!! Form::text('contact_prenom', $customer->contact_prenom, ['class' => 'form-control', 'placeholder' => 'Prénom:']) !!}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-6 mb-2">
+                {!! Form::text('contact_telephone', $customer->contact_telephone, ['class' => 'form-control', 'placeholder' => 'Téléphone:']) !!}
+                </div>
+                <div class="col-6 mb-2">
+                {!! Form::text('contact_poste', $customer->contact_poste, ['class' => 'form-control', 'placeholder' => 'Poste:']) !!}
+                </div>
+            </div>
+        <div class="form-group">
+        {!! Form::label('nb_events', 'Entrer le nombre d\'événements déjà organisés : ') !!}
+        {!! Form::number('nb_events', $customer->nb_events, ['class' => 'form-control']) !!}
+        </div>
 
-        {!! Form::label('image', 'Ajouter une photo de profil: ') !!}
-        {!! Form::file('image', array('class' => 'form-control')) !!}
-        <br>
-
-        {!! Form::label('Commentaires', 'Commentaires : ') !!}
-        <textarea class="form-control" name="commentaires" rows="4" cols="50" maxlength="140"></textarea>
+        <div class="form-group">
+        {!! Form::label('informations', 'Informations : ') !!}
+        <textarea class="form-control" name="informations" maxlength="350" rows="4" cols="50" placeholder="Vous pouvez ajouter ici des informations concernant le client."></textarea>
+        </div>
         <hr>
-        <input type="hidden" class="form-control" name="actual_nom" value= '{{ $product->nom }}'>
+        <input type="hidden" class="form-control" name="actual_nom" value= '{{ $customer->denomination }}'>
 
-        <br>
-        {!! Form::submit('Modifer', ['class' => 'btn btn-primary btn-sm']) !!}       
+        {!! Form::submit('Modifier', ['class' => 'btn btn-primary btn-sm', 'style' => 'float: right']) !!}       
+
+        <a class='btn btn-secondary btn-sm' style="float: left" href="{{route('index_customer')}}"> Retour </a> 
 
         {!! Form::close() !!}
-
-        <a class='btn btn-secondary btn-sm' href="{{route('index_product')}}"> Retour </a>
     </div>
 </div>
 @endsection

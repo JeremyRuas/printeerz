@@ -4,8 +4,6 @@
 
 
 <div class="container">
-
-<h1 class="mt-3" >Modification d'un utilisateur</h1>
 @if ($errors->any())
     <div class="alert alert-danger">
         <ul>
@@ -64,10 +62,11 @@
         <input type="hidden" class="form-control" name="actual_email" value= '{{$user->email}}'>
 
         
-        {!! Form::submit('Modifier', ['class' => 'btn btn-primary']) !!}
-    {!! Form::close() !!}
+        {!! Form::submit('Modifier', ['class' => 'btn btn-primary btn-sm', 'style' => 'float: right']) !!}       
 
-    <a class='btn btn-secondary' href="{{route('user_index')}}"> Retour </a>
+        <a class='btn btn-secondary btn-sm' style="float: left" href="{{route('user_index')}}"> Retour </a>
+
+    {!! Form::close() !!}
     </div>
 
 @endsection

@@ -4,7 +4,6 @@
 
 <div class="container">
 
-<h1 class="mt-3" >Ajout d'une couleur</h1>
 @if ($errors->any())
     <div class="alert alert-danger">
         <ul>
@@ -23,12 +22,12 @@
         </div>
        
         <br>
-        {!! Form::submit('Ajouter', ['class' => 'btn btn-primary']) !!}       
+        {!! Form::submit('Ajouter', ['class' => 'btn btn-primary btn-sm', 'style' => 'float: right']) !!}       
+
+        <a class='btn btn-secondary btn-sm' style="float: left" href="{{route('index_product')}}"> Retour </a>
 
         {!! Form::close() !!}
         <br>
-
-        <a class='btn btn-secondary ' href="{{route('index_customer')}}"> Retour </a>
     </div>
 </div>
 @endsection

@@ -8,7 +8,7 @@ use App\Product;
 class Zone extends Model
 {
     protected $fillable = [
-        'nom'
+        'nom', 'imageName'
     ];
         /*~~~~~~~~~~~_____Relation Many to Many avec les produits____~~~~~~~~~~~~*/
 

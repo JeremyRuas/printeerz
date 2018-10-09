@@ -6,6 +6,8 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Contracts\Auth\CanResetPassword;
 
+use App\Comment;
+
 class User extends Authenticatable
 {
     use Notifiable;
@@ -18,6 +20,10 @@ class User extends Authenticatable
     protected $fillable = [
         'nom', 'prenom', 'email', 'password', 'role', 'image', 'imageName', 'activate'
     ];
+
+    public function comments() {
+        return $this->belongsToMany('App\Comment');
+    }
 
     /**
      * The attributes that should be hidden for arrays.

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use DB;
 use App\Event;
 use App\Taille;
+use App\Couleur;
 use Illuminate\Http\Request;
 use App\Http\Middleware\isAdmin;
 use App\Http\Middleware\isActivate;
@@ -56,7 +57,7 @@ class TailleController extends Controller
         $taille->nom = $request->nom;
         
         $taille->save();
-        return redirect('admin/Taille/index');
+        return redirect('admin/Taille/index')->with('status', 'La taille a été correctement ajouté.');
     }
 
     /**
@@ -90,14 +91,15 @@ class TailleController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
         if (request('actual_nom') == request('nom')){
             $validatedData = $request->validate([
                 'nom' => 'required|string|max:255'
     
             ]);
-            $taille = new Taille;
+            $id = $request->id;
+            $taille = Taille::find($id);
             $taille->nom = $request->nom;
         }        
         else{
@@ -105,11 +107,12 @@ class TailleController extends Controller
                 'nom' => 'required|string|max:255'
     
             ]);
-            $taille = new Taille;
+            $id = $request->id;
+            $taille = Taille::find($id);
             $taille->nom = $request->nom;
         }
         $taille->save();
-        return redirect('admin/Taille/index');
+        return redirect('admin/Taille/index')->with('status', 'La taille a été correctement modifié.');
     }
 
     /**
@@ -122,6 +125,6 @@ class TailleController extends Controller
     {
         $taille = Taille::find($id);
         $taille->delete();
-        return redirect('admin/Taille/index');
+        return redirect('admin/Taille/index')->with('status', 'La taille a été correctement supprimé.');
     }
 }

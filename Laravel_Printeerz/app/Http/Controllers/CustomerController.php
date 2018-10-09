@@ -72,8 +72,10 @@ class CustomerController extends Controller
         $customer->denomination = $request->denomination;
         $customer->adresse = $request->adresse;
         $customer->code_postal = $request->code_postal;
+        $customer->activite = $request->activite;
         $customer->ville = $request->ville;
         $customer->siren = $request->siren;
+        $customer->nb_events = $request->nb_events;
         $customer->contact_nom = $request->contact_nom;
         $customer->contact_prenom = $request->contact_prenom;
         $customer->contact_telephone = $request->contact_telephone;
@@ -82,7 +84,7 @@ class CustomerController extends Controller
         $customer->event_id = $request->event_id;
         $customer->save();
 
-        return redirect('admin/Customer/index');
+        return redirect('admin/Customer/index')->with('status', 'Le client a été correctement ajouté.');
     }
 
     /**
@@ -141,6 +143,8 @@ class CustomerController extends Controller
             $customer->code_postal = $request->code_postal;
             $customer->ville = $request->ville;
             $customer->siren = $request->siren;
+            $customer->activite = $request->activite;
+            $customer->nb_events = $request->nb_events;
             $customer->contact_nom = $request->contact_nom;
             $customer->contact_prenom = $request->contact_prenom;
             $customer->contact_telephone = $request->contact_telephone;
@@ -173,6 +177,8 @@ class CustomerController extends Controller
             $customer->code_postal = $request->code_postal;
             $customer->ville = $request->ville;
             $customer->siren = $request->siren;
+            $customer->activite = $request->activite;
+            $customer->nb_events = $request->nb_events;
             $customer->contact_nom = $request->contact_nom;
             $customer->contact_prenom = $request->contact_prenom;
             $customer->contact_telephone = $request->contact_telephone;
@@ -180,11 +186,8 @@ class CustomerController extends Controller
             $customer->informations = $request->informations;
             $customer->event_id = $request->event_id;
             $customer->save();
-
-            $customer->save();
             }     
-        return redirect('admin/Product/index');
-    }
+            return view('admin/Customer.show', ['customer' => $customer])->with('status', 'Le client a été correctement modifié.');    }
 
     /**
      * Remove the specified resource from storage.
@@ -196,6 +199,6 @@ class CustomerController extends Controller
     {
         $customer = Customer::find($id);
         $customer->delete();
-        return redirect('admin/Customer/index');
+        return redirect('admin/Customer/index')->with('status', 'Le client a été correctement supprimé.');
     }
 }

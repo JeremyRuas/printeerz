@@ -4,9 +4,7 @@
 
 
 
-<div class="container">
-
-<h1 class="mt-3" >Ajout d'un client</h1>
+<div class="container mt-3">
 @if ($errors->any())
     <div class="alert alert-danger">
         <ul>
@@ -66,14 +64,15 @@
 
         <div class="form-group">
         {!! Form::label('informations', 'Informations : ') !!}
-        <textarea class="form-control" name="informations" rows="4" cols="50" placeholder="Vous pouvez ajouter ici des informations concernant le client."></textarea>
+        <textarea class="form-control" name="informations" maxlength="350" rows="4" cols="50" placeholder="Vous pouvez ajouter ici des informations concernant le client."></textarea>
         </div>
 
-        {!! Form::submit('Ajouter', ['class' => 'btn btn-primary mb-2']) !!}       
+        {!! Form::submit('Ajouter', ['class' => 'btn btn-primary btn-sm', 'style' => 'float: right']) !!}       
+
+        <a class='btn btn-secondary btn-sm' style="float: left" href="{{route('index_customer')}}"> Retour </a>
 
         {!! Form::close() !!}
 
-        <a class='btn btn-secondary ' href="{{route('index_customer')}}"> Retour </a>
     </div>
 </div>
 @endsection

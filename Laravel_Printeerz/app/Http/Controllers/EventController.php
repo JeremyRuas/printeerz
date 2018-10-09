@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use DB;
 use App\Event;
 use App\Customer;
+use App\Product;
+use App\ImageZone;
+use App\Couleur;
 use Illuminate\Http\Request;
 use App\Http\Middleware\isAdmin;
 use App\Http\Middleware\isActivate;
@@ -13,7 +16,7 @@ class EventController extends Controller
 {
     public function __construct(){
         $this->middleware(isActivate::class);
-        $this->middleware(isAdmin::class);
+       // $this->middleware(isAdmin::class);
         $this->middleware('auth');
 
     }
@@ -27,7 +30,6 @@ class EventController extends Controller
     {
         $events = Event::all();
         return view('admin/Event.index', ['events' => $events]);
-
     }
 
     /**
@@ -43,7 +45,12 @@ class EventController extends Controller
         foreach($customers as $customer){
             $select[$customer->id] = $customer->denomination;
         }
-        return view('admin/Event.add', ['select' => $select]);
+        $products = Product::all();
+        $select_products = [];
+        foreach($products as $product){
+            $select[$product->id] = $product->denomination;
+        }
+        return view('admin/Event.add', ['select_products' => $select_products, 'select' => $select]);
     }
 
     /**
@@ -59,17 +66,22 @@ class EventController extends Controller
             'annonceur' => 'required|string|max:255',
             'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'lieu' => 'required|string|max:255',
-            'commentaires' => 'max:750'
+            'description' => 'max:750'
         ]);
 
         $event = new Event;
+        //dd($request);
         $event->nom = $request->nom;
         $event->annonceur = $request->annonceur;
         $event->customer_id = $request->customer_id;
+        $event->save();
+        $event->products()->sync($request->get('products_list'));
+        $event->customer_id = $request->customer_id;
+        $event->save();
         $event->lieu = $request->lieu;
         $event->type = $request->type;
         $event->date = $request->date;
-        $event->commentaires = $request->commentaires;
+        $event->description = $request->description;
         $event->save();
 
         if ($request->hasFile('image')){
@@ -78,6 +90,25 @@ class EventController extends Controller
 
             $event->logoName = $logoName;
         }
+        // if ($request->hasFile('image_coeur')){
+        //     $coeur_imageName = time().'1.'.request()->image_coeur->getClientOriginalExtension();           
+        //     request()->image_coeur->move(public_path('uploads'), $coeur_imageName);
+
+        //     $event->coeur_imageName = $coeur_imageName;
+        // }
+        // if ($request->hasFile('image_face_avant')){
+        //     $face_avant_imageName = time().'2.'.request()->image_face_avant->getClientOriginalExtension();           
+        //     request()->image_face_avant->move(public_path('uploads'), $face_avant_imageName);
+
+        //     $event->face_avant_imageName = $face_avant_imageName;
+        // }
+        // if ($request->hasFile('image_face_arriere')){
+        //     $face_arriere_imageName = time().'3.'.request()->image_face_arriere->getClientOriginalExtension();           
+        //     request()->image_face_arriere->move(public_path('uploads'), $face_arriere_imageName);
+
+        //     $event->face_arriere_imageName = $face_arriere_imageName;
+        // }
+        
         $event->save();
 
         return redirect('admin/Event/index');
@@ -92,7 +123,8 @@ class EventController extends Controller
     public function show($id)
     {
         $event = Event::find($id);
-        return view('admin/Event.show', ['event' => $event]);
+        $product = Product::find($id);
+        return view('admin/Event.show', ['event' => $event, 'product' => $product]);
     }
 
     /**
@@ -105,11 +137,17 @@ class EventController extends Controller
     {
         $event = Event::find($id);
         $customers = Customer::all();
+        $products = Product::all();
+
         $select = [];
         foreach($customers as $customer){
             $select[$customer->id] = $customer->denomination;
         }
-        return view('admin/Event.edit', ['event' => $event, 'select' => $select]);
+        $select_products = [];
+        foreach($products as $product){
+            $select[$product->id] = $product->denomination;
+        }
+        return view('admin/Event.edit', ['event' => $event, 'select' => $select, 'select_products' => $select_products]);
     }
 
     /**
@@ -127,17 +165,21 @@ class EventController extends Controller
                 'annonceur' => 'required|string|max:255',
                 'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
                 'lieu' => 'required|string|max:255',
-                'commentaires' => 'max:750'
+                'description' => 'max:750'
             ]);
             $id = $request->id;
             $event = Event::find($id);
             $event->nom = $request->nom;
             $event->annonceur = $request->annonceur;
             $event->customer_id = $request->customer_id;
+            $event->save();
+            $event->products()->sync($request->get('products_list'));
+            $event->couleurs()->sync($request->get('couleurs_list'));
+            $event->save();
             $event->lieu = $request->lieu;
             $event->type = $request->type;
             $event->date = $request->date;
-            $event->commentaires = $request->commentaires;
+            $event->description = $request->description;
 
             if ($request->hasFile('image')){
                 $logoName = time().'.'.request()->image->getClientOriginalExtension();           
@@ -145,6 +187,25 @@ class EventController extends Controller
     
                 $event->logoName = $logoName;
             }
+
+            // if ($request->hasFile('image_coeur')){
+            //     $coeur_imageName = time().'1.'.request()->image_coeur->getClientOriginalExtension();           
+            //     request()->image_coeur->move(public_path('uploads'), $coeur_imageName);
+    
+            //     $event->coeur_imageName = $coeur_imageName;
+            // }
+            // if ($request->hasFile('image_face_avant')){
+            //     $face_avant_imageName = time().'2.'.request()->image_face_avant->getClientOriginalExtension();           
+            //     request()->image_face_avant->move(public_path('uploads'), $face_avant_imageName);
+    
+            //     $event->face_avant_imageName = $face_avant_imageName;
+            // }
+            // if ($request->hasFile('image_face_arriere')){
+            //     $face_arriere_imageName = time().'3.'.request()->image_face_arriere->getClientOriginalExtension();           
+            //     request()->image_face_arriere->move(public_path('uploads'), $face_arriere_imageName);
+    
+            //     $event->face_arriere_imageName = $face_arriere_imageName;
+            // }
         }        
         else{
             $validatedData = $request->validate([
@@ -152,7 +213,7 @@ class EventController extends Controller
                 'annonceur' => 'required|string|max:255',
                 'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
                 'lieu' => 'required|string|max:255',
-                'commentaires' => 'max:750'
+                'description' => 'max:750'
             ]);
 
             $id = $request->id;
@@ -160,17 +221,41 @@ class EventController extends Controller
             $event->nom = $request->nom;
             $event->annonceur = $request->annonceur;
             $event->customer_id = $request->customer_id;
+            $event->save();
+            $event->products()->sync($request->get('products_list'));
+            $event->couleurs()->sync($request->get('couleurs_list'));
+            $event->save();
             $event->lieu = $request->lieu;
             $event->type = $request->type;
             $event->date = $request->date;
-            $event->commentaires = $request->commentaires;
+            $event->description = $request->description;
             
             if ($request->hasFile('image')){
-                $imageName = time().'.'.request()->image->getClientOriginalExtension();           
-                request()->image->move(public_path('uploads'), $imageName);
+                $logoName = time().'.'.request()->image->getClientOriginalExtension();           
+                request()->image->move(public_path('uploads'), $logoName);
     
-                $product->imageName = $imageName;
+                $event->logoName = $logoName;
             }
+
+            // if ($request->hasFile('image_coeur')){
+            //     $coeur_imageName = time().'1.'.request()->image_coeur->getClientOriginalExtension();           
+            //     request()->image_coeur->move(public_path('uploads'), $coeur_imageName);
+    
+            //     $event->coeur_imageName = $coeur_imageName;
+            // }
+            // if ($request->hasFile('image_face_avant')){
+            //     $face_avant_imageName = time().'2.'.request()->image_face_avant->getClientOriginalExtension();           
+            //     request()->image_face_avant->move(public_path('uploads'), $face_avant_imageName);
+    
+            //     $event->face_avant_imageName = $face_avant_imageName;
+            // }
+            // if ($request->hasFile('image_face_arriere')){
+            //     $face_arriere_imageName = time().'3.'.request()->image_face_arriere->getClientOriginalExtension();           
+            //     request()->image_face_arriere->move(public_path('uploads'), $face_arriere_imageName);
+    
+            //     $event->face_arriere_imageName = $face_arriere_imageName;
+            // }
+
         }
         $event->save();
         return redirect('admin/Event/index');

@@ -1,5 +1,16 @@
 @import url('https://fonts.googleapis.com/css?family=Raleway');
 
+#img_add_product {
+  border: solid 1px rgb(233, 228, 228);
+  border-radius:25px;
+  padding: 8px;
+}
+
+#scrollbarProduct {
+  height: 550px;
+  overflow: auto;
+}
+
 legend {
   background-color: #000;
   color: #fff;
@@ -2933,5 +2944,7 @@ input:-webkit-autofill:active {
     -ms-flex-negative: 0;
         flex-shrink: 0;
     margin-left: 20px; }
+
+
 
 /*# sourceMappingURL=client.63f424f8.css.map*/
