@@ -8,7 +8,7 @@ use App\Product;
 class Couleur extends Model
 {
     protected $fillable = [
-        'nom'
+        'nom', 'pantoneName'
     ];
 
     public function products() {

@@ -14,7 +14,7 @@ use App\Gabarit;
 class Product extends Model
 {
     protected $fillable = [
-        'nom', 'reference', 'sexe', 'description', 'tailles_list', 'couleurs_list', 'zones_list','imageName', 'color1', 'color2', 'color3', 'color1_coeur_imageName', 'color2_coeur_imageName', 'color3_coeur_imageName'
+        'nom', 'reference', 'sexe', 'description', 'tailles_list', 'couleurs_list', 'zones_list','imageName'
     ];
 
     /*~~~~~~~~~~~_____Relation Many to Many avec les tailles dispo____~~~~~~~~~~~~*/
@@ -27,7 +27,7 @@ class Product extends Model
     public function getTaillesListAttribute(){
         if($this->id){
             return $this->tailles->pluck('id');
-        }            
+        }
     }
 
     public function setTaillesListAttribute($value){
@@ -42,7 +42,7 @@ class Product extends Model
     public function getCouleursListAttribute(){
         if($this->id){
             return $this->couleurs->pluck('id');
-        }            
+        }
     }
 
     public function setCouleursListAttribute($value){

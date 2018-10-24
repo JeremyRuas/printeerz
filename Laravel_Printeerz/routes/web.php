@@ -100,7 +100,11 @@ Route::get('admin/Couleur/index', 'CouleurController@index')->name('index_couleu
 
 Route::get('admin/Couleur/create', 'CouleurController@create')->name('create_couleur');
 
+Route::get('admin/Couleur/createAdmin', 'CouleurController@createAdmin')->name('createAdmin_couleur');
+
 Route::post('admin/Couleur/store', 'CouleurController@store')->name('store_couleur');
+
+Route::post('admin/Couleur/storeAdmin', 'CouleurController@storeAdmin')->name('storeAdmin_couleur');
 
 Route::get('admin/Couleur/show/{id}', 'CouleurController@show')->name('show_couleur');
 
@@ -150,7 +154,7 @@ Route::delete('comment/delete/{id}', 'CommentController@destroy')->name('destroy
 
 /*~~~~~~~~~~~___________Front Route__________~~~~~~~~~~~~*/
 
-Route::get('front/index', 'FrontController@index')->name('index_front');
+Route::get('front/show/{id}', 'FrontController@show')->name('show_front');
 
 Route::post('comment/add', 'CommentController@addComment');
 

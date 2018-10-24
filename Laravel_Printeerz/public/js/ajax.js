@@ -61,7 +61,6 @@ today = mm + '/' + dd + '/' + yyyy;
                 console.log(xhr.responseText);
             }
         });
-        //console.log("It failed");
     }); 
 
     $('#submit_modal').click(function() {
@@ -78,17 +77,21 @@ today = mm + '/' + dd + '/' + yyyy;
     $('#AddColorAjax').on('submit', function(e) {
         e.preventDefault(); 
         var nom = $('#nom').val();
+        var pantone = $('#pantone')[0].files[0];
         var select_couleurs = $('#select_couleurs').val();
+        var formData = new FormData($(this)[0]);
         $.ajax({
             type: "POST",
             url: '/admin/Couleur/store',
-            data:  $(this).serialize(),
+            data: formData,
+            cache: false,
+            contentType: false,
+            processData: false,
             success: function(data){
                 $('#select_color1').append('<option value="' + data.couleur.id +'" >' + data.couleur.nom + '</option>');
                 $('#select_color2').append('<option value="' + data.couleur.id +'" >' + data.couleur.nom + '</option>');
                 $('#select_color3').append('<option value="' + data.couleur.id +'" >' + data.couleur.nom + '</option>');
                 console.log(data.couleur)
-               //nom = $('#nom').val('');
             }
         });
     });

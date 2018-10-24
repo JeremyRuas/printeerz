@@ -2,18 +2,25 @@
 
 namespace App\Http\Controllers;
 
+use App\Couleur;
+use App\Event;
+
 use Illuminate\Http\Request;
 
 class FrontController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Display the specified resource.
      *
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function show($id)
     {
-        return view('/front.index');
+        $event = Event::find($id);
+        $couleurs = Couleur::all();
+        
+        return view('front.show', ['event' => $event, 'couleurs' => $couleurs]);
     }
 
 }

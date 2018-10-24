@@ -31,7 +31,7 @@
 
     @if(!empty($customer->event))
         @foreach($customer->event as $event)
-        <div>{{ '- '. $event->nom }}</div>
+        <div><a href="{{route('show_event', $event->id)}}">{{ '- '. $event->nom }}</a></div>
         @endforeach
     @else
         <div><i>Vide</i></div>

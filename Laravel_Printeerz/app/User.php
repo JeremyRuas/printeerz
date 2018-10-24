@@ -25,6 +25,10 @@ class User extends Authenticatable
         return $this->belongsToMany('App\Comment');
     }
 
+    public function events() {
+        return $this->belongsToMany('App\Event');
+    }
+
     /**
      * The attributes that should be hidden for arrays.
      *

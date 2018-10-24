@@ -10,13 +10,19 @@
     <title>Printeerz Dashboard</title>
     <meta content="width=device-width, initial-scale=1" name="viewport" />
     <link href="/css/styles.css" rel="stylesheet" />
+    <link href="//cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
+    
+    <link href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/datatable.css') }}"/>
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">   
     <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="{{ asset('css/datatable.css') }}"/>  
-    <link href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css">
-    <link href="//cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
+    
+    
+    
     <link rel="stylesheet" type="text/css" href="{{ asset('slick/slick-theme.css') }}"/>
     <link rel="stylesheet" type="text/css" href="{{ asset('slick/slick.css') }}"/>  
+    {{-- <link rel="stylesheet" type="text/css" href="{{ asset('css/App.scss') }}"/>   --}}
+
     
 </head>
 <body>
@@ -62,33 +68,33 @@
     <?php return redirect('errors/404');?>
            
 @endif   
-                            <div class="uik-divider__horizontal"></div>
+                <div class="uik-divider__horizontal"></div>
 
-                            <!-- ~~~~~~~~________ NAV DE GAUCHE ________~~~~~~~~ -->
+                <!-- ~~~~~~~~________ NAV DE GAUCHE ________~~~~~~~~ -->
 
-                            <div class="uik-nav-link-two-container__wrapper">
-                            <a class="uik-nav-link-2__wrapper active uik-nav-link-2__highlighted" href="{{route('home')}}">
-                                <span class="uik-nav-link-2__text">
-                                    <span class="uik-nav-link-2__icon" ><i class="uikon">stats</i></span>Dashboard</span>
-                            </a>
-                            <a class="uik-nav-link-2__wrapper uik-nav-link-2__highlighted" href="{{route('user_index')}}">
-                                <span class="uik-nav-link-2__text">
-                                <span class="uik-nav-link-2__icon" ><i class="uikon">profile_round</i></span>Utilisateurs</span>
-                                </a>
-                            <a class="uik-nav-link-2__wrapper uik-nav-link-2__highlighted" href="{{route('index_event')}}">
-                                <span class="uik-nav-link-2__text"><span class="uik-nav-link-2__icon"><i class="uikon">calendar</i>
-                                </span>Evénements</span></a>
-                                <a class="uik-nav-link-2__wrapper uik-nav-link-2__highlighted" href="{{route('index_customer')}}"><span class="uik-nav-link-2__text"><span class="uik-nav-link-2__icon"><i class="uikon">profile_plus_round</i></span>Clients</span></a>
-                                <a class="uik-nav-link-2__wrapper uik-nav-link-2__highlighted"  href="{{route('index_product')}}"><span class="uik-nav-link-2__text"><span class="uik-nav-link-2__icon"><i class="uikon">money_round</i></span>Produits</span></a>
-                                {{-- <a class="uik-nav-link-2__wrapper uik-nav-link-2__highlighted"  href="{{route('index_product')}}"><span class="uik-nav-link-2__text"><span class="uik-nav-link-2__icon"><i class="uikon">gallery_grid_view</i></span>Gabarits</span></a> --}}
+                <div class="uik-nav-link-two-container__wrapper">
+                <a class="uik-nav-link-2__wrapper active uik-nav-link-2__highlighted" href="{{route('home')}}">
+                    <span class="uik-nav-link-2__text">
+                        <span class="uik-nav-link-2__icon" ><i class="uikon">stats</i></span>Dashboard</span>
+                </a>
+                <a class="uik-nav-link-2__wrapper uik-nav-link-2__highlighted" href="{{route('user_index')}}">
+                    <span class="uik-nav-link-2__text">
+                    <span class="uik-nav-link-2__icon" ><i class="uikon">profile_round</i></span>Utilisateurs</span>
+                    </a>
+                <a class="uik-nav-link-2__wrapper uik-nav-link-2__highlighted" href="{{route('index_event')}}">
+                    <span class="uik-nav-link-2__text"><span class="uik-nav-link-2__icon"><i class="uikon">calendar</i>
+                    </span>Evénements</span></a>
+                    <a class="uik-nav-link-2__wrapper uik-nav-link-2__highlighted" href="{{route('index_customer')}}"><span class="uik-nav-link-2__text"><span class="uik-nav-link-2__icon"><i class="uikon">profile_plus_round</i></span>Clients</span></a>
+                    <a class="uik-nav-link-2__wrapper uik-nav-link-2__highlighted"  href="{{route('index_product')}}"><span class="uik-nav-link-2__text"><span class="uik-nav-link-2__icon"><i class="uikon">money_round</i></span>Produits</span></a>
+                    {{-- <a class="uik-nav-link-2__wrapper uik-nav-link-2__highlighted"  href="{{route('index_product')}}"><span class="uik-nav-link-2__text"><span class="uik-nav-link-2__icon"><i class="uikon">gallery_grid_view</i></span>Gabarits</span></a> --}}
 
-                                <a href="{{route('logout')}}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();" class="uik-nav-link-2__wrapper active uik-nav-link-2__highlighted" ><span class="uik-nav-link-2__text "><span class="uik-nav-link-2__icon"><i class="uikon">trending_down</i></span>Déconnexion</span></a><form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                                            {{ csrf_field() }}
-                                        </form></div>
-                            <!-- <section class="uik-nav-section__wrapper"><span class="uik-nav-section-title__wrapper">Recently viewed</span><a class="uik-nav-link__wrapper"><span class="uik-nav-link__text">Overall Performance</span><span class="uik-nav-link__rightEl">→</span></a><a class="uik-nav-link__wrapper"><span class="uik-nav-link__text">Invoice #845</span><span class="uik-nav-link__rightEl">→</span></a><a class="uik-nav-link__wrapper"><span class="uik-nav-link__text">Customer: Minerva Viewer</span><span class="uik-nav-link__rightEl">→</span></a></section> -->
-                        </div>
-                    </div>
-                </div>
+                    <a href="{{route('logout')}}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();" class="uik-nav-link-2__wrapper active uik-nav-link-2__highlighted" ><span class="uik-nav-link-2__text "><span class="uik-nav-link-2__icon"><i class="uikon">trending_down</i></span>Déconnexion</span></a><form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;" >
+                                {{ csrf_field() }}
+                            </form></div>
+                <!-- <section class="uik-nav-section__wrapper"><span class="uik-nav-section-title__wrapper">Recently viewed</span><a class="uik-nav-link__wrapper"><span class="uik-nav-link__text">Overall Performance</span><span class="uik-nav-link__rightEl">→</span></a><a class="uik-nav-link__wrapper"><span class="uik-nav-link__text">Invoice #845</span><span class="uik-nav-link__rightEl">→</span></a><a class="uik-nav-link__wrapper"><span class="uik-nav-link__text">Customer: Minerva Viewer</span><span class="uik-nav-link__rightEl">→</span></a></section> -->
+            </div>
+        </div>
+    </div>
                 
                 <div class="uik-container-v__container">
                     <div class="uik-top-bar__wrapper">
@@ -155,12 +161,12 @@
     <!-- Scripts -->
     
     <script src="{{ asset('js/app.js') }}"></script>
-    <script src="{{ asset('js/datatable.js') }}"></script>
+    
     <script type="text/javascript" src="//code.jquery.com/jquery-1.11.0.min.js"></script>
     <script type="text/javascript" src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
     {{-- <script
     src="{{ asset('js/ajax.js') }}"></script> --}}
-
+    {{-- <script src="{{ asset('js/datatable.js') }}"></script> --}}
     <script src="//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
     <script>$(document).ready(function() {
         if($(".datatable")[0]){

@@ -22,8 +22,6 @@
             <th>Références</th>
             <th>Sexes</th>
             <th>Tailles</th>
-            <th>Zones</th>
-            <th>Couleurs</th>
             <th>Commentaires</th>
             <th></th>
         </tr>
@@ -33,20 +31,13 @@
 
     <tr><td>{{ $product->nom }}</td>
     <td>{{ $product->reference }}</td>
-    @if ($product->sexe == 'homme')
+    @if ($product->sexe == 'Homme')
         <td> Homme </td>
     @else
         <td> Femme </td>
     @endif
     <?php $list_tailles = $product->tailles->pluck('nom')->toArray();?>
     <td><?php echo implode(', ', $list_tailles); ?></td>
-    
-    <?php $list_zones = $product->zones->pluck('nom')->toArray();?>
-    <td><?php echo implode(', ', $list_zones); ?></td>
-
-    <?php $list_couleurs = $product->couleurs->pluck('nom')->toArray();?>
-    <td><?php echo implode(', ', $list_couleurs); ?></td>
-
 
     <?php $description = $product->description;
     if(strlen($description) > 50){

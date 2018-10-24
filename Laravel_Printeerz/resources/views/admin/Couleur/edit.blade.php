@@ -19,6 +19,9 @@
         <div class="form-group">
         {!! Form::label('nom', 'Entrer la couleur : ') !!}
         {!! Form::text('nom', $couleur->nom, ['class' => 'form-control', 'placeholder' => 'Couleur:']) !!}
+        {!! Form::label('pantone', 'Ajouter le pantone: ') !!}
+        <br>
+        {!! Form::file('pantone') !!}
         </div>
         <input type="hidden" class="form-control" name="actual_nom" value= '{{ $couleur->nom }}'>
 

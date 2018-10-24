@@ -30,11 +30,11 @@
 @foreach ($events as $event)
     <tr>
     @if($event->logoName)
-    <td><img src="/uploads/{{$event->logoName}}" class="miniRoundedImage" alt="img_event" ></td>
+    <td><a href="{{route('show_event', $event->id)}}"><img src="/uploads/{{$event->logoName}}" class="miniRoundedImage" alt="img_event"></a></td>
     @else
     <td><img src="/uploads/no_image.jpg" class="miniRoundedImage" alt="img_event" ></td>
     @endif
-    <td>{{ $event->nom }}</td>
+    <td><a style="text-decoration:none;color:black;" href="{{route('show_event', $event->id)}}">{{ $event->nom }}</a></td>
     <td>{{ $event->annonceur }}</td>
 
     @if($event->customer)
@@ -57,7 +57,7 @@
     @else
     <td>{{ '...' }}</td>
     @endif
-    <td><a class='btn btn-success btn-sm' href="{{route('show_event', $event->id)}}"  title="Détails de l'événement"> Détails </a></td></tr>
+    <td><a class='btn btn-success btn-sm' href="{{route('show_event', $event->id)}}" title="Détails de l'événement"> Détails </a></td></tr>
 @endforeach
     </tbody>
     </div>

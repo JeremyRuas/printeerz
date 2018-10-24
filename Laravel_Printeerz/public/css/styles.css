@@ -1,5 +1,11 @@
 @import url('https://fonts.googleapis.com/css?family=Raleway');
 
+.grid {
+  border: solid 1px rgb(233, 228, 228);
+  border-radius: 9px;
+  padding: 8px;
+}
+
 #img_add_product {
   border: solid 1px rgb(233, 228, 228);
   border-radius:25px;

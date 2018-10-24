@@ -11,30 +11,34 @@ use App\Comment;
 class Event extends Model
 {
     protected $fillable = [
-        'nom', 'customer_id', 'annonceur', 'couleurs_list', 'logoName', 'lieu', 'date', 'type', 'contact', 'commentaire', 'product_id'
+        'nom', 'customer_id', 'annonceur', 'couleurs_list', 'logoName', 'imageName1', 'imageName2', 'lieu', 'date', 'type', 'contact', 'commentaire', 'product_id'
     ];
 
     public function customer() {
         return $this->belongsTo('App\Customer');
     }
 
+    public function product() {
+        return $this->belongsTo('App\Product');
+    }
+
     public function comments() {
         return $this->hasMany('App\Comment');
     }
 
-    public function products() {
-        return $this->belongsToMany('App\Product');
-    }
+    // public function products() {
+    //     return $this->belongsToMany('App\Product');
+    // }
 
-    public function getProductListAttribute() {
-        if($this->id){
-            return $this->products->pluck('id');
-        }            
-    }
+    // public function getProductListAttribute() {
+    //     if($this->id){
+    //         return $this->products->pluck('id');
+    //     }            
+    // }
 
-    public function setProductListAttribute($value) {
-        return $this->products()->sync($value);
-    }
+    // public function setProductListAttribute($value) {
+    //     return $this->products()->sync($value);
+    // }
 
     public function typeEvents() {
         return $this->belongstoMany('App\TypeEvent');
@@ -62,6 +66,20 @@ class Event extends Model
 
     public function setCouleursListAttribute($value){
         return $this->couleurs()->sync($value);
+    }
+
+    public function users() {
+        return $this->belongsToMany('App\User');
+    }
+
+    public function getUserListAttribute() {
+        if($this->id){
+            return $this->users->pluck('id');
+        }            
+    }
+
+    public function setUserListAttribute($value) {
+        return $this->users()->sync($value);
     }
 
 }

@@ -37,6 +37,17 @@ class CouleurController extends Controller
     }
 
     /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function createAdmin()
+    {
+        $couleurs = Couleur::all();
+        return view('admin/Couleur.add', ['couleurs' => $couleurs]);
+    }
+
+    /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -51,16 +62,63 @@ class CouleurController extends Controller
             ]);
             $couleur = new Couleur;
             $couleur->nom = $request->nom;
+
+            if ($request->hasFile('pantone')){
+                $pantoneName = time().'.'.request()->pantone->getClientOriginalExtension();
+                request()->pantone->move(public_path('uploads'), $pantoneName);
+    
+                $couleur->pantoneName = $pantoneName;
+            }
             
             $couleur->save();
             //return redirect('admin/Couleur/index')->with('status', 'La couleur a été correctement ajouté.');
-
+            
             $response = array(
                 'status' => 'success',
                 'msg' => 'Setting created successfully',
                 'couleur' => $couleur
             );
             return response()->json($response);
+        } 
+        else{
+            return 'no';
+        }
+        
+        
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function storeAdmin(Request $request)
+    {
+        if($request){
+            $validatedData = $request->validate([
+                'nom' => 'required|string|max:255'
+    
+            ]);
+            $couleur = new Couleur;
+            $couleur->nom = $request->nom;
+
+            if ($request->hasFile('pantone')){
+                $pantoneName = time().'.'.request()->pantone->getClientOriginalExtension();
+                request()->pantone->move(public_path('uploads'), $pantoneName);
+    
+                $couleur->pantoneName = $pantoneName;
+            }
+            
+            $couleur->save();
+            return redirect('admin/Couleur/index')->with('status', 'La couleur a été correctement ajoutée.');
+            
+            // $response = array(
+            //     'status' => 'success',
+            //     'msg' => 'Setting created successfully',
+            //     'couleur' => $couleur
+            // );
+            // return response()->json($response);
         } 
         else{
             return 'no';
@@ -110,6 +168,12 @@ class CouleurController extends Controller
             $id = $request->id;
             $couleur = Couleur::find($id);
             $couleur->nom = $request->nom;
+            if ($request->hasFile('pantone')){
+                $pantoneName = time().'.'.request()->pantone->getClientOriginalExtension();
+                request()->pantone->move(public_path('uploads'), $pantoneName);
+    
+                $couleur->pantoneName = $pantoneName;
+            }
         }        
         else{
             $validatedData = $request->validate([
@@ -119,9 +183,15 @@ class CouleurController extends Controller
             $id = $request->id;
             $couleur = Couleur::find($id);
             $couleur->nom = $request->nom;
+            if ($request->hasFile('pantone')){
+                $pantoneName = time().'.'.request()->pantone->getClientOriginalExtension();
+                request()->pantone->move(public_path('uploads'), $pantoneName);
+    
+                $couleur->pantoneName = $pantoneName;
+            }
         }
         $couleur->save();
-        return redirect('admin/Couleur/index')->with('status', 'La couleur a été correctement modifié.');
+        return redirect('admin/Couleur/index')->with('status', 'La couleur a été correctement modifiée.');
     }
 
     /**
@@ -134,6 +204,6 @@ class CouleurController extends Controller
     {
         $couleur = Couleur::find($id);
         $couleur->delete();
-        return redirect('admin/Couleur/index')->with('status', 'La couleur a été correctement supprimé.');
+        return redirect('admin/Couleur/index')->with('status', 'La couleur a été correctement supprimée.');
     }
 }
